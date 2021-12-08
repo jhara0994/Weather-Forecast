@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+   <header>
+       <h1>Weather Dashboard</h1>
+   </header>
+
+    <main class="container-fluid">
+        <div class="row">
+
+            <div class="search-column col-md-3" id="content-left">
+                <form class="flex-column" id="city-search-form">
+                    <h3>Search for a City:</h3>
+                    <div class="form-row">
+                        <input class="form-input" id="search-city" type="search" placeholder="Atlanta"></input>
+                        
+                        <button class="btn btn-primary" id="search-btn" type="submit"><i class="fas fa-search"></i>Search</button>
+                    </div>
+                </form>
+                <div class="recent-search border" id="recent-search-btn">
+                    <h3>Recent Searches:</h3>
+                    <ul class="list-group mt-4" id="city-results"></ul>
+                </div>
+            </div>
+
+            <div class="col-md-9 pt-4 right-side" id="content-right">
+                <div class="row border rounded city-choice" id="weather-choice" >
+                    <!--Current Weather Information-->
+                    <h3>Current Weather Data: <span class="city-input" id="city-input"></span></h3>
+                    <!--Insert City Name-->
+                    <!--Insert Date-->
+                    <!--Insert Weather Conditions Icon-->
+                    <ul class="current-weather">
+                        <li>Temperature:<span id="current-temp"></span> &deg; F</li>
+                        <li>Humidity:<span id="current-humid"></span>%</li>
+                        <li>Wind-Speed:<span id="current-wind"></span>MPH</li>
+                        <li>UV Index:<span id="current-UV"></span></li>
+                    </ul>
+                <!--5-day Forecast-->
+                <div class="container-fluid" id="five-day-forecast"></div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-2 five-day">
+                            <p>Day 1 (Date)</p>
+                            <ul>
+                                <li><span id="five-day-one"></span></li>
+                                <img id="five-icon-one" alt="Day 1 Forecast Icon" src="">
+                                <li>Temp: <span id="five-temp-one"></span></li>
+                                <li>Wind-Speed: <span id="five-wind-one"></span></li>
+                                <li>Humidity: <span id="five-humid-one"></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-2 five-day">
+                            <p>Day 2 (Date)</p>
+                            <ul>
+                                <li><span id="five-day-two"></span></li>
+                                <img id="five-icon-two" alt="Day 2 Forecast Icon" src="">
+                                <li>Temp: <span id="five-temp-two"></span></li>
+                                <li>Wind-Speed: <span id="five-wind-two"></span></li>
+                                <li>Humidity: <span id="five-humid-two"></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-2 five-day">
+                            <p>Day 3 (Date)</p>
+                            <ul>
+                                <li><span id="five-day-three"></span></li>
+                                <img id="five-icon-three" alt="Day 3 Forecast Icon" src="">
+                                <li>Temp: <span id="five-temp-three"></span></li>
+                                <li>Wind-Speed: <span id="five-wind-three"></span></li>
+                                <li>Humidity: <span id="five-humid-three"></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-2 five-day">
+                            <p>Day 4 (Date)</p>
+                            <ul>
+                                <li><span id="five-day-four"></span></li>
+                                <img id="five-icon-four" alt="Day 4 Forecast Icon" src="">
+                                <li>Temp: <span id="five-temp-four"></span></li>
+                                <li>Wind-Speed: <span id="five-wind-four"></span></li>
+                                <li>Humidity: <span id="five-humid-four"></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-2 five-day">
+                            <p>Day 5 (Date)</p>
+                            <ul>
+                                <li><span id="five-day-five"></span></li>
+                                <img id="five-icon-five" alt="Day 5 Forecast Icon" src="">
+                                <li>Temp: <span id="five-temp-five"></span></li>
+                                <li>Wind-Speed: <span id="five-wind-five"></span></li>
+                                <li>Humidity: <span id="five-humid-five"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./assets/script.js"></script>
+    
+</body>
+</html>

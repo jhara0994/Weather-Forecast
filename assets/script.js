@@ -7,6 +7,7 @@ var cityFormEl = $("#city-search-form")
 var currentWeather = $("#current-weather")
 var citySearch = $("#search-city")
 
+
 // variable and function to save search data
 var storeSearch = function() {
     console.log(cities)
@@ -16,7 +17,9 @@ var storeSearch = function() {
 
 // function to get current weather data by city
 var getCurrent = function(city) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}"
+    var city = citySearch
+    var apiKey = "dbe8f36d7d126101002f4b2e1fce3a52"
+    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
 
     fetch(apiUrl)
     .then (function(response) {
@@ -35,16 +38,65 @@ var displayWeather = function (weather, searchCity) {
 
     console.log(weather);
 
+    // function to append the date to the current weather display
     var date = document.createElement("span")
     date.textContent = moment().format("M/D/YYYY")
     cityInput.append(date);
+
+    // function to append icon 
+    var icon = document.createElement("span")
+    icon.setAttribute("src", "https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png")
+    cityInput.append(icon);
+
+    // function to show temperature
+    var temp = $("#current-temp")
+    temp.textContent = weather.main.temp 
+
+    // function to show humidity
+    var humidity = $("#current-humid")
+    humidity.textContent = weather.main.humidity 
+
+    // function to show wind speed
+    var windSpeed = $("#current-wind")
+    windSpeed.textContent = weather.wind.speed
+
+    // variables to pull UV Index
+    var lat = weather.coord.lat;
+    var lon = weather.coord.lon;
+    getUvIndex(lat, lon)
 }
 
-// need a results container (empty div) in HTML for current data
-// need a results container for future data
+// function to pull the UV Index
+var getUvIndex = function (lat, lon) {
+    var apiKey = "dbe8f36d7d126101002f4b2e1fce3a52"
+    var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?appid=${apiKey}&lat=${lat}&lon=${lon}`
 
-// need function to pull API data. Tied in with onclick.
-// need function to show current data fom city search
+    fetch(apiUrl)
+    .then(function(response) {
+        return response.json()
+        .then(function(data) {
+            displayUvIndex(data)
+            console.log(data)
+        })
+    })
+}
+
+// function to display UV Index
+var displayUvIndex = function(index) {
+    var uvIndex = $("current-UV")
+
+    uvIndex.textContent = index.current.uvi
+
+    // conditional statement to change icon 
+    if (index.current.uvi <= 2) {
+        uvIndex.classList = "uv-favorable"
+    } else if (index.current.uvi > 2 && index.value <= 8) {
+        uvIndex.classList = "uv-moderate"
+    } else if (index.current.uvi >= 8) {
+        uvIndex.classList = "uv-severe"
+    }
+}
+
 // Justin's code - scratching Justin's code for now - check slack if needed
 
 searchBtn.onclick = getCurrent() 
@@ -63,8 +115,8 @@ searchBtn.onclick = getCurrent()
 
 function citySearch() {
   $("#weather-choice").css("display", "block");
-  var cityinput = $("#search-city").val();
-  console.log(cityinput);
+  var cityInput = $("#search-city").val();
+  console.log(cityInput);
   var value = $(this).data("name");
   var queryURL = "https://api.openweathermap.org/data/2.5/find?q=" + value + "&units=imperial&appid=" + apiKey;
 

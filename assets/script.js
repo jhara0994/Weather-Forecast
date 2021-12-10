@@ -5,19 +5,34 @@ var searchBtn = $("#search-btn");
 var cities = [];
 var cityFormEl = $("#city-search-form")
 var currentWeather = $("#current-weather")
-var citySearch = $("#search-city")
+var citySearch = document.getElementById("search-city")
+
+formSubmitHandler = function(event) {
+    event.preventDefault();
+    var city = citySearch.value.trim()
+
+    if(city){
+        getCurrent(city);
+    } else {
+        alert("Please enter a valid city:")
+    }
+
+    storeSearch()
+
+}
 
 
 // variable and function to save search data
 var storeSearch = function() {
-    console.log(cities)
+    console.log(pastSearch)
     // may need to add a stringify to JSON part here.
-    localStorage.setItem("cities")
+    localStorage.setItem("citySearch", citySearch.value)
 }
 
 // function to get current weather data by city
 var getCurrent = function(city) {
-    var city = citySearch
+    citySearch.value = ""
+    var city = citySearch.value
     var apiKey = "dbe8f36d7d126101002f4b2e1fce3a52"
     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
 
@@ -97,8 +112,6 @@ var displayUvIndex = function(index) {
     }
 }
 
-// Justin's code - scratching Justin's code for now - check slack if needed
-
 searchBtn.onclick = getCurrent() 
 
 
@@ -112,7 +125,7 @@ searchBtn.onclick = getCurrent()
 // Future data display: 5-day forecast; date, icon of weather conditions, temp, wind speed, and humidity.
 
 // Once city is saved in search bar, make sure it is selectable for quick viewing. 
-
+/*
 function citySearch() {
   $("#weather-choice").css("display", "block");
   var cityInput = $("#search-city").val();
@@ -184,5 +197,5 @@ function citySearch() {
   });
 
 }
-
+*/
 

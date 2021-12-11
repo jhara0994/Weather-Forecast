@@ -1,13 +1,60 @@
 //set variables
 var apiKey = "dbe8f36d7d126101002f4b2e1fce3a52";
-var cityInput = $("#city-input");
-var searchBtn = $("#search-btn");
+var cityInput = document.getElementById("city-input");
+var searchBtn = document.getElementById("search-btn");
 var cities = [];
-var cityFormEl = $("#city-search-form")
-var currentWeather = $("#current-weather")
-var citySearch = document.getElementById("search-city")
+var cityFormEl = document.getElementById("city-search-form")
+var citySearch = document.querySelector("#search-city")
+var currentWeather = document.querySelector(".current-weather")
+var searchResults = document.getElementById("city-results")
+var choiceContainerEl = document.querySelector(".city-choice-container")
 
-formSubmitHandler = function(event) {
+
+
+var formSubmitHandler = function(event){
+    var city = citySearch.value.trim()
+
+    if(city) {
+        getCurrent(city)
+        citySearch.value = ""
+    }
+    else {
+        alert("Please enter a City:")
+    }
+
+    storeSearch()
+}
+
+var storeSearch = function(){
+    console.log(city)
+    localStorage.setItem("city", JSON.stringify(cities));
+};
+
+var getCurrent = function(city) {
+    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
+
+    fetch(apiUrl)
+    .then(function(response) {
+        response.json().then(function(data) {
+            console.log(data)
+            displayWeather(data, city)
+        })
+    })
+}
+
+var displayWeather = function(weather, searchCity) {
+    choiceContainerEl.textContent = searchCity
+}
+
+searchBtn.onclick = getCurrent() 
+searchBtn.onclick = formSubmitHandler()
+
+
+
+
+
+
+/*formSubmitHandler = function(event) {
     event.preventDefault();
     var city = citySearch.value.trim()
 
@@ -132,13 +179,11 @@ function citySearch() {
   console.log(cityInput);
   var value = $(this).data("name");
   var queryURL = "https://api.openweathermap.org/data/2.5/find?q=" + value + "&units=imperial&appid=" + apiKey;
-
     $.ajax({
         url: queryURL,
         method: "GET"
       }).then(function(response2) {
     console.log(response2);
-
     // Parameter Results go here.
     // Get values for search city section and append them to the display
     var selectCity = response2.list[0].name;
@@ -151,7 +196,6 @@ function citySearch() {
     $("#select-temp").text(selectTemp);
     $("#select-humid").text(selectHumid);
     $("#select-wind").text(selectWind);
-
    // Get values for search city 5 day forecast sections
    // Block 1
    var cityFiveDateOne = response2.list[1].dt_txt;
@@ -161,7 +205,6 @@ function citySearch() {
    $("#city-five-icon-one").attr("src", cityFiveIconOne);
    $("#city-five-temp-one").text(cityFiveTempOne); 
    $("#city-five-humid-one").text(cityFiveHumidOne);
-
    // Block 2
    var cityFiveIconTwo = "https://openweathermap.org/img/w/" + response2.list[1].weather[0].icon + ".png";
    var cityFiveTempTwo = response2.list[1].main.temp;
@@ -169,7 +212,6 @@ function citySearch() {
    $("#city-five-icon-two").attr("src", cityFiveIconTwo);
    $("#city-five-temp-two").text(cityFiveTempTwo); 
    $("#city-five-humid-two").text(cityFiveHumidTwo);
-
    // Block 3
    var cityFiveIconThree = "https://openweathermap.org/img/w/" + response2.list[2].weather[0].icon + ".png";
    var cityFiveTempThree = response2.list[2].main.temp;
@@ -177,7 +219,6 @@ function citySearch() {
    $("#city-five-icon-three").attr("src", cityFiveIconThree);
    $("#city-five-temp-three").text(cityFiveTempThree); 
    $("#city-five-humid-three").text(cityFiveHumidThree);
-
    // Block 4
    var cityFiveIconFour = "https://openweathermap.org/img/w/" + response2.list[3].weather[0].icon + ".png";
    var cityFiveTempFour = response2.list[3].main.temp;
@@ -185,7 +226,6 @@ function citySearch() {
    $("#city-five-icon-four").attr("src", cityFiveIconFour);
    $("#city-five-temp-four").text(cityFiveTempFour); 
    $("#city-five-humid-four").text(cityFiveHumidFour);
-
    // Block 5
    var cityFiveIconFive = "https://openweathermap.org/img/w/" + response2.list[4].weather[0].icon + ".png";
    var cityFiveTempFive = response2.list[4].main.temp;
@@ -193,9 +233,6 @@ function citySearch() {
    $("#city-five-icon-five").attr("src", cityFiveIconFive);
    $("#city-five-temp-five").text(cityFiveTempFive); 
    $("#city-five-humid-five").text(cityFiveHumidFive);
-
   });
-
 }
 */
-
